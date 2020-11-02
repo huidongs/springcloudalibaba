@@ -13,7 +13,6 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
-
         <!-- 自动生成toString方法 -->
         <!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
         <!-- 自动生成equals方法和hashcode方法 -->
@@ -59,13 +58,13 @@
         </jdbcConnection>
 
         <!--实体-->
-        <javaModelGenerator targetPackage="pers.huidong.usercenter.domain.entity.${moduleName}"
+        <javaModelGenerator targetPackage="pers.huidong.contentcenter.domain.entity.${moduleName}"
                             targetProject="src/main/java"/>
         <!--mapper-->
-        <sqlMapGenerator targetPackage="pers.huidong.usercenter.dao.${moduleName}"
+        <sqlMapGenerator targetPackage="pers.huidong.contentcenter.dao.${moduleName}"
                          targetProject="src/main/resources"/>
         <!--mapper接口-->
-        <javaClientGenerator targetPackage="pers.huidong.usercenter.dao.${moduleName}"
+        <javaClientGenerator targetPackage="pers.huidong.contentcenter.dao.${moduleName}"
                              targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
