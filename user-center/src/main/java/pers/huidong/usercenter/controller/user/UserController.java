@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pers.huidong.usercenter.domain.entity.user.User;
-import pers.huidong.usercenter.service.user.UserService;
+import pers.huidong.usercenter.service.user.impl.UserServiceImpl;
 
 /**
  * @Desc:
@@ -15,7 +15,7 @@ import pers.huidong.usercenter.service.user.UserService;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/{id}")
     public User findById(@PathVariable Integer id){

@@ -1,25 +1,19 @@
 package pers.huidong.contentcenter.service.content;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import pers.huidong.contentcenter.dao.content.ShareMapper;
-import pers.huidong.contentcenter.domain.entity.content.Share;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import pers.huidong.commons.CommonResult;
+import pers.huidong.contentcenter.domain.entity.content.User;
+import pers.huidong.contentcenter.service.content.impl.ShareFallbackServiceImpl;
 
 /**
  * @Desc:
  */
-@Service
-public class ShareService {
-    @Autowired
-    private ShareMapper shareMapper;
+@FeignClient(value = "user-center",fallback = ShareFallbackServiceImpl.class)
+public interface ShareService {
 
-    public Share findById(Integer id){
-        //获取分享详情
-        Share share =  this.shareMapper.selectByPrimaryKey(id);
-        //分享人id
-        Integer userId = share.getUserId();
-        //怎么调用用户微服务的/users/{userId}
-        return null;
-    }
+    @GetMapping("/users/{id}")
+    CommonResult<User> getUserInfo(@PathVariable("id")Integer id);
 
 }
