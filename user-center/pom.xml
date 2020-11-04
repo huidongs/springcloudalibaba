@@ -12,6 +12,12 @@
     <artifactId>user-center</artifactId>
 
     <dependencies>
+        <!--引入自己定义的api通用包-->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>huidong-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>

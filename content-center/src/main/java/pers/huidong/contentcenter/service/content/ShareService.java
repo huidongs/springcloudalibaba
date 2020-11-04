@@ -14,6 +14,6 @@ import pers.huidong.contentcenter.service.content.impl.ShareFallbackServiceImpl;
 public interface ShareService {
 
     @GetMapping("/users/{id}")
-    CommonResult<User> getUserInfo(@PathVariable("id")Integer id);
+    CommonResult<User> getUserInfo(@PathVariable("id") Integer id);
 
 }

@@ -45,7 +45,7 @@
         </plugin>
         <commentGenerator>
             <!--该元素指定我们不希望将时间戳添加到任何生成的注释中：-->
-            <!--            <property name="suppressDate" value="true"/>-->
+                        <property name="suppressDate" value="true"/>
             <!--去掉注释：-->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>

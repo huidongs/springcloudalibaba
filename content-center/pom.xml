@@ -9,15 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>content_center</artifactId>
+    <artifactId>content-center</artifactId>
 
     <dependencies>
 
         <!--引入自己定义的api通用包-->
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>huidong-commons</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <!--mysql-->
         <dependency>

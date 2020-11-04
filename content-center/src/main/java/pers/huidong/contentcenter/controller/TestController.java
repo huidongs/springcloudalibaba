@@ -25,8 +25,7 @@ public class TestController {
     private ShareMapper shareMapper;
 
     @GetMapping("/shares/{id}")
-    public CommonResult<User> findById(@PathVariable Integer id){
-        System.out.println("===========================");
+    public CommonResult<User> findById(@PathVariable("id") Integer id){
         //获取分享详细
         Share share = shareMapper.selectByPrimaryKey(id);
         log.info("============="+share.toString());
