@@ -1,6 +1,7 @@
 package pers.huidong.usercenter.service.user;
 
 import org.springframework.stereotype.Service;
+import pers.huidong.commons.CommonResult;
 import pers.huidong.usercenter.domain.entity.user.User;
 
 /**
@@ -9,5 +10,5 @@ import pers.huidong.usercenter.domain.entity.user.User;
 
 public interface UserService {
 
-    User findById(Integer id);
+    CommonResult<User> findById(Integer id);
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pers.huidong.commons.CommonResult;
 import pers.huidong.usercenter.domain.entity.user.User;
 import pers.huidong.usercenter.service.user.impl.UserServiceImpl;
 
@@ -18,7 +19,11 @@ public class UserController {
     private UserServiceImpl userService;
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable Integer id){
+    public CommonResult<User> findById(@PathVariable Integer id){
         return this.userService.findById(id);
+    }
+    @GetMapping("/test")
+    public CommonResult<User> test(User user){
+        return new CommonResult<User>(200,"test",user);
     }
 }

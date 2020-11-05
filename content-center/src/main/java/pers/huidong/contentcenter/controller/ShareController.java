@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pers.huidong.commons.CommonResult;
 import pers.huidong.contentcenter.dao.content.ShareMapper;
 import pers.huidong.contentcenter.domain.entity.content.Share;
-import pers.huidong.contentcenter.domain.entity.content.User;
+import pers.huidong.contentcenter.domain.dto.user.UserDTO;
+import pers.huidong.contentcenter.feignclient.UserCenterFeignClient;
 import pers.huidong.contentcenter.service.content.ShareService;
 
 /**
@@ -16,16 +17,17 @@ import pers.huidong.contentcenter.service.content.ShareService;
  */
 @Slf4j
 @RestController
-public class TestController {
+public class ShareController {
 
     @Autowired
     private ShareService shareService;
-
+    @Autowired
+    private UserCenterFeignClient userCenterFeignClient;
     @Autowired
     private ShareMapper shareMapper;
 
     @GetMapping("/shares/{id}")
-    public CommonResult<User> findById(@PathVariable("id") Integer id){
+    public CommonResult<UserDTO> findById(@PathVariable("id") Integer id){
         //获取分享详细
         Share share = shareMapper.selectByPrimaryKey(id);
         log.info("============="+share.toString());
@@ -33,7 +35,7 @@ public class TestController {
         Integer userId = share.getUserId();
         //怎么调用用户微服务的/users/{userId}?
         log.info("============="+userId);
-        return shareService.getUserInfo(userId);
+        return userCenterFeignClient.getUserInfo(userId);
     }
 
 }
