@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pers.huidong.commons.CommonResult;
+
 import pers.huidong.contentcenter.dao.content.ShareMapper;
 import pers.huidong.contentcenter.domain.entity.content.Share;
 import pers.huidong.contentcenter.domain.dto.user.UserDTO;
 import pers.huidong.contentcenter.feignclient.UserCenterFeignClient;
-import pers.huidong.contentcenter.service.content.ShareService;
 
 /**
  * @Desc:
@@ -19,8 +19,6 @@ import pers.huidong.contentcenter.service.content.ShareService;
 @RestController
 public class ShareController {
 
-    @Autowired
-    private ShareService shareService;
     @Autowired
     private UserCenterFeignClient userCenterFeignClient;
     @Autowired

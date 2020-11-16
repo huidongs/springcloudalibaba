@@ -11,4 +11,6 @@ import pers.huidong.contentcenter.domain.dto.content.AuditDTO;
 public interface ShareService {
 
     Share auditById(Integer id, AuditDTO auditDTO);
+
+    String test();
 }
