@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Desc:
  */
 @SpringBootApplication
-@MapperScan("pers.huidong")
+@MapperScan("pers.huidong.contentcenter.dao.content")
 @EnableFeignClients
 public class ContentCenterApplication {
 

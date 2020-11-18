@@ -12,5 +12,6 @@ public interface ShareService {
 
     Share auditById(Integer id, AuditDTO auditDTO);
 
-    String test();
+    void auditByIdInDB(Integer id,AuditDTO auditDTO);
+    void auditByIdWithRocketMqLog(Integer id,AuditDTO auditDTO,String transactionId);
 }

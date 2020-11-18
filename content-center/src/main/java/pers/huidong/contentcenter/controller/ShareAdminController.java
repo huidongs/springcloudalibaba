@@ -20,12 +20,6 @@ public class ShareAdminController {
     @PutMapping("/audit/{id}")
     public Share auditById(@PathVariable Integer id,@RequestBody AuditDTO auditDTO){
         //TODO 认证，授权
-        System.out.println("========================");
         return shareService.auditById(id, auditDTO);
-
-    }
-    @GetMapping("/test")
-    public String test(){
-        return shareService.test();
     }
 }
