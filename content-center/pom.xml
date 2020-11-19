@@ -81,6 +81,17 @@
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <version>2.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>-->
+<!--            <version>2.2.1.RELEASE</version>-->
+<!--            <classifier>javadoc</classifier>-->
+<!--            <type>javadoc</type>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

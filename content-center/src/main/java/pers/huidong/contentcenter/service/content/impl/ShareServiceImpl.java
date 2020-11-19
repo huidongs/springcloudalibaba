@@ -46,6 +46,7 @@ public class ShareServiceImpl implements ShareService {
         //3.如果是PASS,那么为发布人添加积分：：syn为增加用户体验和接口效率，这里使用异步执行，可选方法有cTemplate,@sync,webClient以及MQ
         if(AuditStatusEnum.PASS.equals(auditDTO.getAuditStatusEnum())){
             String transactionId = UUID.randomUUID().toString();
+            //System.out.println("====serviceImpl中====transactionId:"+transactionId);
             //发送半消息
             this.rocketMQTemplate.sendMessageInTransaction(
                     "add-bonus",
@@ -84,7 +85,7 @@ public class ShareServiceImpl implements ShareService {
         //4 数据库缓存
     }
     /**
-     *  处理本地数据库,增加了记录日志
+     *  处理本地数据库,并记录了事务日志
      * */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -92,6 +93,7 @@ public class ShareServiceImpl implements ShareService {
         this.auditByIdInDB(id,auditDTO);
         this.rocketmqTransactionLogMapper.insertSelective(
                 RocketmqTransactionLog.builder()
+                        .id(id)
                         .transactionId(transactionId)
                         .log("审核分享...")
                         .build()

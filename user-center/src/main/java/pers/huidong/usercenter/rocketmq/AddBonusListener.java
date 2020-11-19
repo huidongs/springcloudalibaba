@@ -30,6 +30,7 @@ public class AddBonusListener implements RocketMQListener<UserAddBonusMsgDTO> {
     public void onMessage(UserAddBonusMsgDTO message) {
         //当收到消息的时候，执行的业务
         //1.为用户加积分
+        log.info("开始添加积分");
         Integer userId = message.getUserId();
         Integer bonus = message.getBouns();
         User user = this.userMapper.selectByPrimaryKey(userId);

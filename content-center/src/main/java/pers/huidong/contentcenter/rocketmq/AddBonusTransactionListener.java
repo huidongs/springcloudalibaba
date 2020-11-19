@@ -1,5 +1,6 @@
 package pers.huidong.contentcenter.rocketmq;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
@@ -16,6 +17,7 @@ import pers.huidong.contentcenter.service.content.ShareService;
  * @Desc:
  */
 @RocketMQTransactionListener
+@Slf4j
 public class AddBonusTransactionListener implements RocketMQLocalTransactionListener {
 
     @Autowired
@@ -26,20 +28,25 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
 
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
+        log.info("我进入了executeLocalTransaction");
         MessageHeaders headers = msg.getHeaders();
         String transactionId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
         Integer share_id = Integer.valueOf((String)headers.get("share_id"));
 
         try{
+            log.info("我进入了executeLocalTransaction中的try");
             this.shareService.auditByIdWithRocketMqLog(share_id,(AuditDTO) arg,transactionId);
             return RocketMQLocalTransactionState.COMMIT;
-        }catch (Exception e){
+        } catch(Exception e){
+            log.info("我进入了executeLocalTransaction中的catch");
+            e.printStackTrace();
             return RocketMQLocalTransactionState.ROLLBACK;
         }
     }
 
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
+        log.info("我进入了checkLocalTransaction");
         MessageHeaders headers = msg.getHeaders();
         String transactionId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
         RocketmqTransactionLog transactionLog = rocketmqTransactionLogMapper.selectOne(
