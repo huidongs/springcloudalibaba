@@ -20,6 +20,11 @@ spring:
       rocketmq:
         binder:
           name-server: 127.0.0.1:9876
+        bindings:
+          output:
+            producer:
+              transactional: true
+              group: tx-add-bonus-group
       bindings:
         output:
           destination: stream-test-topic
@@ -52,9 +57,10 @@ management:
     web:
       exposure:
         include: '*'
-rocketmq:
-  producer:
-    group: test-group #小坑：必须指定group
-  name-server: 127.0.0.1:9876
+#使用spring-cloud-stream整合rocketmq后不需要这
+#rocketmq:
+#  producer:
+#    group: test-group #小坑：必须指定group
+#  name-server: 127.0.0.1:9876
 mybatis:
   mapper-locations: classpath:pers.huidong.contentcenter.dao.content/*.xml

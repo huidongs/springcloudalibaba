@@ -14,8 +14,16 @@ spring:
         server-addr: 139.196.196.1:1111
     sentinel:
       transport:
-        dashboard: localhost:8081
+        dashboard: localhost:8088
         port: 8719   #默认8719端口，假如被占用会自动从8719开始一次扫面，直至找到未被占用的端口
+    stream:
+      rocketmq:
+        binder:
+          name-server: 127.0.0.1:9876
+      bindings:
+        input:
+          destination: stream-test-topic
+          group: binder-group #这里一定要设置，如果用的是其他的mq可以不设置
 
 #消费者将要去访问的微服务名称（注册成功进nacos的微服务提供者）
 #service-url:
@@ -24,5 +32,5 @@ spring:
 feign:
   sentinel:
     enabled: true
-rocketmq:
-  name-server: 127.0.0.1:9876
+#rocketmq:
+#  name-server: 127.0.0.1:9876

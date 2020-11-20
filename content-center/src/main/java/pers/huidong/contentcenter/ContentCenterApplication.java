@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan("pers.huidong.contentcenter.dao.content")
 @EnableFeignClients
-@EnableBinding(Source.class)
+@EnableBinding({Source.class})
 public class ContentCenterApplication {
 
     public static void main(String[] args) {

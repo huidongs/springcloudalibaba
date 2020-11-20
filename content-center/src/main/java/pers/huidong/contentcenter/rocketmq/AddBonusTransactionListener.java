@@ -1,5 +1,6 @@
 package pers.huidong.contentcenter.rocketmq;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
@@ -16,7 +17,7 @@ import pers.huidong.contentcenter.service.content.ShareService;
 /**
  * @Desc:
  */
-@RocketMQTransactionListener
+@RocketMQTransactionListener(txProducerGroup ="tx-add-bonus-group")
 @Slf4j
 public class AddBonusTransactionListener implements RocketMQLocalTransactionListener {
 
@@ -32,10 +33,11 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
         MessageHeaders headers = msg.getHeaders();
         String transactionId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
         Integer share_id = Integer.valueOf((String)headers.get("share_id"));
+        AuditDTO auditDTO = JSON.parseObject((String) headers.get("dto"),AuditDTO.class);
 
         try{
             log.info("我进入了executeLocalTransaction中的try");
-            this.shareService.auditByIdWithRocketMqLog(share_id,(AuditDTO) arg,transactionId);
+            this.shareService.auditByIdWithRocketMqLog(share_id,auditDTO,transactionId);
             return RocketMQLocalTransactionState.COMMIT;
         } catch(Exception e){
             log.info("我进入了executeLocalTransaction中的catch");
