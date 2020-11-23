@@ -17,7 +17,7 @@ import pers.huidong.contentcenter.service.content.ShareService;
 /**
  * @Desc:
  */
-@RocketMQTransactionListener(txProducerGroup ="tx-add-bonus-group")
+@RocketMQTransactionListener(txProducerGroup = "tx-add-bonus-group")
 @Slf4j
 public class AddBonusTransactionListener implements RocketMQLocalTransactionListener {
 
@@ -27,25 +27,31 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
     @Autowired
     private RocketmqTransactionLogMapper rocketmqTransactionLogMapper;
 
+
+    /**
+     * 执行本地数据库操作
+     * */
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         log.info("我进入了executeLocalTransaction");
         MessageHeaders headers = msg.getHeaders();
         String transactionId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
-        Integer share_id = Integer.valueOf((String)headers.get("share_id"));
-        AuditDTO auditDTO = JSON.parseObject((String) headers.get("dto"),AuditDTO.class);
+        Integer share_id = Integer.valueOf((String) headers.get("share_id"));
+        AuditDTO auditDTO = JSON.parseObject((String) headers.get("dto"), AuditDTO.class);
 
-        try{
+        try {
             log.info("我进入了executeLocalTransaction中的try");
-            this.shareService.auditByIdWithRocketMqLog(share_id,auditDTO,transactionId);
+            this.shareService.auditByIdWithRocketMqLog(share_id, auditDTO, transactionId);
             return RocketMQLocalTransactionState.COMMIT;
-        } catch(Exception e){
+        } catch (Exception e) {
             log.info("我进入了executeLocalTransaction中的catch");
             e.printStackTrace();
             return RocketMQLocalTransactionState.ROLLBACK;
         }
     }
-
+    /**
+     * 回查
+     * */
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
         log.info("我进入了checkLocalTransaction");
@@ -56,9 +62,9 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
                         .transactionId(transactionId)
                         .build()
         );
-        if (transactionLog != null){
+        if (transactionLog != null) {
             return RocketMQLocalTransactionState.COMMIT;
-        }else {
+        } else {
             return RocketMQLocalTransactionState.ROLLBACK;
         }
     }
