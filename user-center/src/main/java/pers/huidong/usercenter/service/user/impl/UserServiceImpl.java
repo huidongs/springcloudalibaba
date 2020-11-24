@@ -8,6 +8,7 @@ import pers.huidong.commons.CommonResult;
 import pers.huidong.usercenter.dao.bonus.BonusEventLogMapper;
 import pers.huidong.usercenter.dao.user.UserMapper;
 import pers.huidong.usercenter.domain.dto.messaging.UserAddBonusMsgDTO;
+import pers.huidong.usercenter.domain.dto.user.UserLoginDTO;
 import pers.huidong.usercenter.domain.entity.bonus.BonusEventLog;
 import pers.huidong.usercenter.domain.entity.user.User;
 import pers.huidong.usercenter.service.user.UserService;
@@ -54,6 +55,33 @@ public class UserServiceImpl implements UserService {
                 .build()
         );
         log.info("积分添加完毕");
+    }
+    /**
+     * @deprecated wx用户登录,判断是否已注册
+     * @param loginDTO,openId
+     * @return user
+     * */
+    @Override
+    public User login(UserLoginDTO loginDTO,String openId){
+        //根据openId获取用户信息
+        User user = this.userMapper.selectOne(
+                User.builder().wxId(openId).build()
+        );
+        //没有注册则初始化用户信息
+        if (user == null){
+            User userToSave = User.builder()
+                    .wxId(openId)
+                    .bonus(300)
+                    .wxNickname(loginDTO.getWxNickname())
+                    .avatarUrl(loginDTO.getAvatarUrl())
+                    .roles("user")
+                    .createTime(new Date())
+                    .updateTime(new Date()).build();
+            this.userMapper.insertSelective(userToSave);
+            return userToSave;
+        }
+        //注册了则直接返回user
+        return user;
     }
 
 }

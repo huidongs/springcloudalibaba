@@ -150,12 +150,12 @@ public class JwtOperator {
         System.out.println(new String(header));
 
         // 将我改成你生成的token的第二段（以.为边界）
-        String encodedPayload = "eyJpZCI6IjEiLCJpYXQiOjE1NjU1ODk1NDEsImV4cCI6MTU2Njc5OTE0MX0";
+        String encodedPayload = "eyJpZCI6IjEiLCJpYXQiOjE1NjU1ODk4MTcsImV4cCI6MTU2Njc5OTQxN30";
         // 测试5: 解密Payload
         byte[] payload = Base64.decodeBase64(encodedPayload.getBytes());
         System.out.println(new String(payload));
 
-        // 测试6: 这是一个被篡改的token，因此会报异常，说明JWT是安全的
-        jwtOperator.validateToken("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJpYXQiOjE1NjU1ODk3MzIsImV4cCI6MTU2Njc5OTMzMn0.nDv25ex7XuTlmXgNzGX46LqMZItVFyNHQpmL9UQf-aUx");
+//        // 测试6: 这是一个被篡改的token，因此会报异常，说明JWT是安全的
+//        jwtOperator.validateToken("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJpYXQiOjE1NjU1ODk3MzIsImV4cCI6MTU2Njc5OTMzMn0.nDv25ex7XuTlmXgNzGX46LqMZItVFyNHQpmL9UQf-aUx");
     }
 }
