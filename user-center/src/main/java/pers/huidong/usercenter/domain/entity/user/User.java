@@ -22,7 +22,7 @@ public class User {
     private Integer id;
 
     /**
-     * 微信id
+     * 微信id，也就是openId
      */
     @Column(name = "wx_id")
     private String wxId;

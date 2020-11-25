@@ -38,9 +38,9 @@ public class UserController {
         return this.userService.findById(id);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public LoginRespDTO wxLogin(@RequestBody UserLoginDTO loginDTO) throws WxErrorException {
-        //微信小程序服务端校验是否已经登录的结果
+        //微信小程序服务端校验是否已经登录,的结果；本来需要加个返回结果是否为空的判断，空则抛异常，但这里引入了weixin-java-miniapp依赖，内部已做判断
         WxMaJscode2SessionResult result = this.wxMaService.getUserService()
                 .getSessionInfo(loginDTO.getCode());
         //微信的openId，用户在这边的唯一标识
@@ -49,7 +49,7 @@ public class UserController {
         User user = this.userService.login(loginDTO, openId);
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("id", user.getId());
-        userInfo.put("wxNicename", user.getWxNickname());
+        userInfo.put("wxNickname", user.getWxNickname());
         userInfo.put("role", user.getRoles());
         //获取信息
         String token = jwtOperator.generateToken(userInfo);
