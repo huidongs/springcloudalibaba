@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
      * */
     @Override
     public User login(UserLoginDTO loginDTO,String openId){
+        System.out.println("=============进入login"+loginDTO);
         //根据openId获取用户信息
         User user = this.userMapper.selectOne(
                 User.builder().wxId(openId).build()
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
                     .createTime(new Date())
                     .updateTime(new Date()).build();
             this.userMapper.insertSelective(userToSave);
+            System.out.println("=============新增用户成功"+userToSave);
             return userToSave;
         }
         //注册了则直接返回user

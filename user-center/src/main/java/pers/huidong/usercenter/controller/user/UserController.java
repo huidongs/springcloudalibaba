@@ -38,12 +38,19 @@ public class UserController {
         return this.userService.findById(id);
     }
 
+    /**
+     * 微信登录
+     *
+     * @param loginDTO 请求内容，UserLoginDTO{ code: xxx, userInfo: xxx }
+     * @return 登录结果
+     */
     @PostMapping("/login")
     public LoginRespDTO wxLogin(@RequestBody UserLoginDTO loginDTO) throws WxErrorException {
+        System.out.println("================"+loginDTO);
         //微信小程序服务端校验是否已经登录,的结果；本来需要加个返回结果是否为空的判断，空则抛异常，但这里引入了weixin-java-miniapp依赖，内部已做判断
-        WxMaJscode2SessionResult result = this.wxMaService.getUserService()
-                .getSessionInfo(loginDTO.getCode());
-        //微信的openId，用户在这边的唯一标识
+        WxMaJscode2SessionResult result = this.wxMaService.getUserService().getSessionInfo(loginDTO.getCode());
+        //这里暂时不需要sessionKey
+//        String sessionKey = result.getSessionKey();
         String openId = result.getOpenid();
         //看用户是否注册，如果没有注册就（插入），如果已经注册，就直接颁发token
         User user = this.userService.login(loginDTO, openId);
