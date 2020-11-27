@@ -11,8 +11,7 @@ import pers.huidong.usercenter.domain.entity.user.User;
  */
 
 public interface UserService {
-
-    CommonResult<User> findById(Integer id);
+    User findById(Integer id);
 
     void receive(UserAddBonusMsgDTO message);
 

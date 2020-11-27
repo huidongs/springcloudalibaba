@@ -136,12 +136,12 @@ public class JwtOperator {
 //        System.out.println(token);
 
         // 将我改成上面生成的token!!!
-           String someToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6Imh1aWRvbmciLCJpYXQiOjE2MDYxODgyNjAsImV4cCI6MTYwNzM5Nzg2MH0.vc99NUR9vkJEiuYmyR8kuwnIK6GyKVwCJ7jJAC5BNCo";
+           String someToken = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInd4Tmlja25hbWUiOiJ4aGQiLCJpZCI6NCwiaWF0IjoxNjA2NDczODczLCJleHAiOjE2MDc2ODM0NzN9.s-P1tPNFXqhOqOYyaspp8LP6s0rR72vDQYpKoaW41b4";
         // 测试2: 如果能token合法且未过期，返回true
-//        Boolean validateToken = jwtOperator.validateToken(someToken);
-//        System.out.println(validateToken);
-//        System.out.println(jwtOperator.getExpirationTime());
-//
+        Boolean validateToken = jwtOperator.validateToken(someToken);
+        System.out.println(validateToken);
+        System.out.println(jwtOperator.getExpirationTime());
+
 //        // 测试3: 获取用户信息
         Claims claims = jwtOperator.getClaimsFromToken(someToken);
         System.out.println(claims);

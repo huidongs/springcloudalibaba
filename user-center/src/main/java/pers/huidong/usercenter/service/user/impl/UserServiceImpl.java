@@ -29,9 +29,8 @@ public class UserServiceImpl implements UserService {
     private BonusEventLogMapper bonusEventLogMapper;
 
     @Override
-    public CommonResult<User> findById(Integer id){
-
-        return new CommonResult<User>(200,"通过id获取用户信息",this.userMapper.selectByPrimaryKey(id));
+    public User findById(Integer id){
+        return this.userMapper.selectByPrimaryKey(id);
     }
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -63,13 +62,15 @@ public class UserServiceImpl implements UserService {
      * */
     @Override
     public User login(UserLoginDTO loginDTO,String openId){
-        System.out.println("=============进入login"+loginDTO);
+        System.out.println("=============进入login======="+loginDTO);
         //根据openId获取用户信息
         User user = this.userMapper.selectOne(
                 User.builder().wxId(openId).build()
         );
+        System.out.println("=============输出user看看======="+user);
         //没有注册则初始化用户信息
         if (user == null){
+            System.out.println("=============当用户为空时，注册用户信息=======");
             User userToSave = User.builder()
                     .wxId(openId)
                     .bonus(300)
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
                     .createTime(new Date())
                     .updateTime(new Date()).build();
             this.userMapper.insertSelective(userToSave);
-            System.out.println("=============新增用户成功"+userToSave);
+            System.out.println("=============注册新增用户成功======"+userToSave);
             return userToSave;
         }
         //注册了则直接返回user

@@ -7,11 +7,13 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.huidong.commons.CommonResult;
+import pers.huidong.usercenter.auth.CheckLogin;
 import pers.huidong.usercenter.domain.dto.user.JwtTokenRespDTO;
 import pers.huidong.usercenter.domain.dto.user.LoginRespDTO;
 import pers.huidong.usercenter.domain.dto.user.UserLoginDTO;
 import pers.huidong.usercenter.domain.dto.user.UserRespDTO;
 import pers.huidong.usercenter.domain.entity.user.User;
+import pers.huidong.usercenter.service.user.UserService;
 import pers.huidong.usercenter.service.user.impl.UserServiceImpl;
 import pers.huidong.usercenter.uitl.JwtOperator;
 
@@ -27,14 +29,15 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private WxMaService wxMaService;
     @Autowired
     private JwtOperator jwtOperator;
 
+    @CheckLogin
     @GetMapping("/{id}")
-    public CommonResult<User> findById(@PathVariable Integer id) {
+    public User findById(@PathVariable Integer id) {
         return this.userService.findById(id);
     }
 
@@ -46,7 +49,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public LoginRespDTO wxLogin(@RequestBody UserLoginDTO loginDTO) throws WxErrorException {
-        System.out.println("================"+loginDTO);
+        System.out.println("================获取前端传来的信息："+loginDTO);
         //微信小程序服务端校验是否已经登录,的结果；本来需要加个返回结果是否为空的判断，空则抛异常，但这里引入了weixin-java-miniapp依赖，内部已做判断
         WxMaJscode2SessionResult result = this.wxMaService.getUserService().getSessionInfo(loginDTO.getCode());
         //这里暂时不需要sessionKey
@@ -68,7 +71,7 @@ public class UserController {
                 expirationTime
         );
         //构建响应
-        return LoginRespDTO.builder()
+        LoginRespDTO loginRespDTO = LoginRespDTO.builder()
                 .token(JwtTokenRespDTO.builder()
                         .token(token)
                         .expirationTime(expirationTime.getTime()).build())
@@ -79,5 +82,7 @@ public class UserController {
                         .wxNickname(user.getWxNickname())
                         .build())
                 .build();
+        System.out.println("============这里是返回结果============="+loginDTO);
+        return loginRespDTO;
     }
 }
