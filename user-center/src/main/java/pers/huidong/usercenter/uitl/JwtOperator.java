@@ -1,7 +1,5 @@
 package pers.huidong.usercenter.uitl;
 
-import com.alibaba.nacos.client.identify.Base64;
-import com.google.common.collect.Maps;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -12,28 +10,30 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Desc:
+ * @Author huidong
+ * @Desc: huidong
  */
 @Slf4j
 @RequiredArgsConstructor
 @SuppressWarnings("WeakerAccess")
 @Component
 public class JwtOperator {
+
     /**
      * 秘钥
-     * - 默认aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
+     * - 默认 aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
      */
-    @Value("${secret:aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt}")
+    @Value("${jwt.secret}")
     private String secret;
+
     /**
      * 有效期，单位秒
      * - 默认2周
      */
-    @Value("${expire-time-in-second:1209600}")
+    @Value("${jwt.expire-time-in-second}")
     private Long expirationTimeInSecond;
 
     /**
@@ -44,10 +44,11 @@ public class JwtOperator {
      */
     public Claims getClaimsFromToken(String token) {
         try {
-            return Jwts.parser()
+            Claims claims = Jwts.parser()
                     .setSigningKey(this.secret.getBytes())
                     .parseClaimsJws(token)
                     .getBody();
+            return claims;
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
             log.error("token解析错误", e);
             throw new IllegalArgumentException("Token invalided.");
@@ -119,11 +120,13 @@ public class JwtOperator {
         return !isTokenExpired(token);
     }
 
-    public static void main(String[] args) {
+ //   public static void main(String[] args) {
         // 1. 初始化
-        JwtOperator jwtOperator = new JwtOperator();
-        jwtOperator.expirationTimeInSecond = 1209600L;
-        jwtOperator.secret = "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt";
+//        JwtOperator jwtOperator = new JwtOperator();
+//        jwtOperator.expirationTimeInSecond = 1209600L;
+//        jwtOperator.secret = "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt";
+//       System.out.println(jwtOperator.secret);
+ //       System.out.println(jwtOperator.expirationTimeInSecond);
 
         // 2.设置用户信息
 //        HashMap<String, Object> objectObjectHashMap = Maps.newHashMap();
@@ -136,15 +139,15 @@ public class JwtOperator {
 //        System.out.println(token);
 
         // 将我改成上面生成的token!!!
-           String someToken = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInd4Tmlja25hbWUiOiJ4aGQiLCJpZCI6NCwiaWF0IjoxNjA2NDczODczLCJleHAiOjE2MDc2ODM0NzN9.s-P1tPNFXqhOqOYyaspp8LP6s0rR72vDQYpKoaW41b4";
+//          String someToken = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInd4Tmlja25hbWUiOiJ4aGQiLCJpZCI6NCwiaWF0IjoxNjA2NjI5Mjc0LCJleHAiOjE2MDc4Mzg4NzR9.Vq9VYLbpJPo_j_03rZxYAavRtzfV50cz51eZ7lVLoB8";
         // 测试2: 如果能token合法且未过期，返回true
-        Boolean validateToken = jwtOperator.validateToken(someToken);
-        System.out.println(validateToken);
-        System.out.println(jwtOperator.getExpirationTime());
+//        Boolean validateToken = jwtOperator.validateToken(someToken);
+//        System.out.println(validateToken);
+//        System.out.println(jwtOperator.getExpirationTime());
 
 //        // 测试3: 获取用户信息
-        Claims claims = jwtOperator.getClaimsFromToken(someToken);
-        System.out.println(claims);
+//        Claims claims = jwtOperator.getClaimsFromToken(someToken);
+//        System.out.println(claims);
 //
 //        // 将我改成你生成的token的第一段（以.为边界）
 //        String encodedHeader = "eyJhbGciOiJIUzI1NiJ9";
@@ -160,5 +163,5 @@ public class JwtOperator {
 //
 //        // 测试6: 这是一个被篡改的token，因此会报异常，说明JWT是安全的
 //        jwtOperator.validateToken("eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJpYXQiOjE1NjU1ODk3MzIsImV4cCI6MTU2Njc5OTMzMn0.nDv25ex7XuTlmXgNzGX46LqMZItVFyNHQpmL9UQf-aUx");
-    }
+   // }
 }

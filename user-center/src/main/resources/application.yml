@@ -26,16 +26,14 @@ spring:
           group: binder-group #这里一定要设置，如果用的是其他的mq可以不设置
 
 #消费者将要去访问的微服务名称（注册成功进nacos的微服务提供者）
-#service-url:
-#  nacos-user-service: http://nacos-payment-provider
+service-url:
+  nacos-user-service: http://nacos-payment-provider
 #激活sentinel对openFeign的支持
 feign:
   sentinel:
     enabled: true
-#rocketmq:
-#  name-server: 127.0.0.1:9876
+rocketmq:
+  name-server: 127.0.0.1:9876
 jwt:
   secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
-  # 有效期，单位秒，默认2周
-  expire-time-in-second: 1209600
-
+  expire-time-in-second: 1209600  # 有效期，单位秒，默认2周
