@@ -11,8 +11,10 @@ import pers.huidong.contentcenter.feignclient.UserCenterFeignClient;
 @Service
 public class ShareServiceFallback implements UserCenterFeignClient {
     @Override
-    public CommonResult<UserDTO> getUserInfo(Integer id) {
-        return new CommonResult<>(44444,"服务降级--ShareFallbackServiceImpl");
+    public UserDTO findById(Integer id) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setWxNickname("流控/降级返回的用户");
+        return userDTO;
     }
 
 }

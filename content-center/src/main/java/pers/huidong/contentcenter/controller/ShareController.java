@@ -4,13 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import pers.huidong.commons.CommonResult;
 
-import pers.huidong.contentcenter.dao.content.ShareMapper;
-import pers.huidong.contentcenter.domain.entity.content.Share;
-import pers.huidong.contentcenter.domain.dto.user.UserDTO;
-import pers.huidong.contentcenter.feignclient.UserCenterFeignClient;
+import pers.huidong.contentcenter.auth.CheckLogin;
+import pers.huidong.contentcenter.domain.dto.content.ShareDTO;
+import pers.huidong.contentcenter.service.content.ShareService;
+
+import static pers.huidong.contentcenter.domain.global.Contant.LOGIN_TOKEN_KEY;
 
 /**
  * @Desc:
@@ -20,20 +21,12 @@ import pers.huidong.contentcenter.feignclient.UserCenterFeignClient;
 public class ShareController {
 
     @Autowired
-    private UserCenterFeignClient userCenterFeignClient;
-    @Autowired
-    private ShareMapper shareMapper;
+    private ShareService shareService;
 
     @GetMapping("/shares/{id}")
-    public CommonResult<UserDTO> findById(@PathVariable("id") Integer id){
-        //获取分享详细
-        Share share = shareMapper.selectByPrimaryKey(id);
-        log.info("============="+share.toString());
-        //发布人id
-        Integer userId = share.getUserId();
-        //怎么调用用户微服务的/users/{userId}?
-        log.info("============="+userId);
-        return userCenterFeignClient.getUserInfo(userId);
+    @CheckLogin
+    public ShareDTO findById(@PathVariable("id") Integer id) {
+        return shareService.findById(id);
     }
 
 }

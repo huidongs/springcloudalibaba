@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pers.huidong.commons.CommonResult;
 import pers.huidong.usercenter.dao.bonus.BonusEventLogMapper;
 import pers.huidong.usercenter.dao.user.UserMapper;
 import pers.huidong.usercenter.domain.dto.messaging.UserAddBonusMsgDTO;

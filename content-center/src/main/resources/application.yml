@@ -46,8 +46,10 @@ feign:
     enabled: true
   client:
     config:
-      user-center:
+      default:
         loggerLevel: full
+        requestInterceptors:
+        - pers.huidong.contentcenter.feignclient.interceptor.TokenRelayRequestInterceptor
 logging:
   level:
 #    pers.huidong.contentcenter.config.UserCenterFeignConfiguration: debug
@@ -62,10 +64,7 @@ management:
 #  producer:
 #    group: test-group #小坑：必须指定group
 #  name-server: 127.0.0.1:9876
-#mybatis:
-#  mapper-locations: classpath:pers.huidong.contentcenter.dao.content/*.xml
-#jwt:
-#  secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
-#  # 有效期，单位秒，默认2周
-#  expire-time-in-second: 1209600
-#
+
+jwt:
+  secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
+  expire-time-in-second: 1209600  # 有效期，单位秒，默认2周
