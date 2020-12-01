@@ -21,6 +21,7 @@ public class MyLogGateWayFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("****************************come in myLogGatewayFilter:"+new Date());
         String uname = exchange.getRequest().getQueryParams().getFirst("uname");
+        System.out.println(uname);
         if (uname == null){
             log.info(("**************用户名为NULL，非法用户"));
             exchange.getResponse().setComplete();

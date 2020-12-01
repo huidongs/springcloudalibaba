@@ -2,7 +2,6 @@ package pers.huidong.contentcenter.service.content.impl;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 import pers.huidong.contentcenter.dao.content.RocketmqTransactionLogMapper;
 import pers.huidong.contentcenter.dao.content.ShareMapper;
 import pers.huidong.contentcenter.domain.dto.content.ShareDTO;
@@ -25,8 +23,6 @@ import pers.huidong.contentcenter.service.content.ShareService;
 
 import java.util.Objects;
 import java.util.UUID;
-
-import static pers.huidong.contentcenter.domain.global.Contant.LOGIN_TOKEN_KEY;
 
 /**
  * @Desc:
