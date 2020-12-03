@@ -28,4 +28,13 @@
     id, user_id, title, create_time, update_time, is_original, author, cover, summary, 
     price, download_url, buy_count, show_flag, audit_status, reason
   </sql>
+    <select id="selectByParam" resultType="pers.huidong.contentcenter.domain.entity.content.Share">
+      select * from share
+      <where>
+        <if test="title!=null and title!=''">
+          title like CONCAT('%',#{title},'%')
+        </if>
+        and audit_status = 'PASS'
+      </where>
+    </select>
 </mapper>

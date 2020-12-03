@@ -13,7 +13,7 @@ import pers.huidong.usercenter.domain.entity.user.User;
 public interface UserService {
     User findById(Integer id);
 
-    void receive(UserAddBonusMsgDTO message);
+    void addBonus(UserAddBonusMsgDTO message);
 
     User login(UserLoginDTO loginDTO, String openId);
 }

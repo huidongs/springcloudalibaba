@@ -28,45 +28,48 @@ public class UserServiceImpl implements UserService {
     private BonusEventLogMapper bonusEventLogMapper;
 
     @Override
-    public User findById(Integer id){
+    public User findById(Integer id) {
         return this.userMapper.selectByPrimaryKey(id);
     }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void receive(UserAddBonusMsgDTO message) {
+    public void addBonus(UserAddBonusMsgDTO megDTO) {
         //当收到消息的时候，执行的业务
         //1.为用户加积分
         log.info("开始添加积分");
-        Integer userId = message.getUserId();
-        Integer bonus = message.getBouns();
-        log.info("userId:"+userId+",bonus:"+bonus);
+        Integer userId = megDTO.getUserId();
+        Integer bonus = megDTO.getBouns();
+        log.info("userId:" + userId + ",bonus:" + bonus);
         User user = this.userMapper.selectByPrimaryKey(userId);
-        user.setBonus(user.getBonus()+bonus);
+        user.setBonus(user.getBonus() + bonus);
         this.userMapper.updateByPrimaryKeySelective(user);
         //2记录日志到bonus_event_log
-        this.bonusEventLogMapper.insert(BonusEventLog.builder()
-                .createTime(new Date())
-                .event("CONTRIBUTE")
-                .userId(userId)
-                .value(bonus)
-                .description("投稿加积分")
-                .build()
+        this.bonusEventLogMapper.insert(
+                BonusEventLog.builder()
+                        .createTime(new Date())
+                        .event(megDTO.getEvent())
+                        .userId(userId)
+                        .value(bonus)
+                        .description(megDTO.getDescription())
+                        .build()
         );
         log.info("积分添加完毕");
     }
+
     /**
-     * @deprecated wx用户登录,判断是否已注册
      * @param loginDTO,openId
      * @return user
-     * */
+     * @deprecated wx用户登录, 判断是否已注册
+     */
     @Override
-    public User login(UserLoginDTO loginDTO,String openId){
+    public User login(UserLoginDTO loginDTO, String openId) {
         //根据openId获取用户信息
         User user = this.userMapper.selectOne(
                 User.builder().wxId(openId).build()
         );
         //没有注册则初始化用户信息
-        if (user == null){
+        if (user == null) {
             User userToSave = User.builder()
                     .wxId(openId)
                     .bonus(300)

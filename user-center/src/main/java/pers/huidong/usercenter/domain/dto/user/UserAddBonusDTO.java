@@ -1,4 +1,4 @@
-package pers.huidong.usercenter.domain.dto.messaging;
+package pers.huidong.usercenter.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserAddBonusMsgDTO {
+@NoArgsConstructor
+public class UserAddBonusDTO {
     /**
-     * 为谁加积分
+     * id
      */
     private Integer userId;
     /**
-     * 加多少积分
-     * */
-    private Integer bouns;
+     * 积分
+     */
+    private Integer bonus;
 
     private String event;
 

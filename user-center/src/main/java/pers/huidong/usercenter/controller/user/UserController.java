@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pers.huidong.commons.CommonResult;
 import pers.huidong.usercenter.auth.CheckLogin;
 import pers.huidong.usercenter.domain.dto.user.JwtTokenRespDTO;
 import pers.huidong.usercenter.domain.dto.user.LoginRespDTO;
@@ -14,7 +13,6 @@ import pers.huidong.usercenter.domain.dto.user.UserLoginDTO;
 import pers.huidong.usercenter.domain.dto.user.UserRespDTO;
 import pers.huidong.usercenter.domain.entity.user.User;
 import pers.huidong.usercenter.service.user.UserService;
-import pers.huidong.usercenter.service.user.impl.UserServiceImpl;
 import pers.huidong.usercenter.uitl.JwtOperator;
 
 import java.util.Date;

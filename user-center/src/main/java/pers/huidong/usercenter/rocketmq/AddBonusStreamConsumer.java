@@ -23,7 +23,9 @@ public class AddBonusStreamConsumer {
 
     @StreamListener(Sink.INPUT)
     public void receive(UserAddBonusMsgDTO message) {
-        userService.receive(message);
+        message.setEvent("CONTRIBUTE");
+        message.setDescription("投稿加积分");
+        userService.addBonus(message);
 //        throw new IllegalArgumentException("抛异常");
     }
     @StreamListener("errorChannel")

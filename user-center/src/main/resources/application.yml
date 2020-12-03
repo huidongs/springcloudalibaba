@@ -24,7 +24,12 @@ spring:
         input:
           destination: stream-test-topic
           group: binder-group #这里一定要设置，如果用的是其他的mq可以不设置
-
+  zipkin:
+    base-url: http://localhost:9411/
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0   #抽样率，默认 0.1
 #消费者将要去访问的微服务名称（注册成功进nacos的微服务提供者）
 service-url:
   nacos-user-service: http://nacos-payment-provider
