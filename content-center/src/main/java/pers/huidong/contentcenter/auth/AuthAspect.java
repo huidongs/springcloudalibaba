@@ -28,7 +28,6 @@ import static pers.huidong.contentcenter.domain.global.Contant.LOGIN_TOKEN_KEY;
 @Component
 public class AuthAspect {
 
-
     @Autowired
     private JwtOperator jwtOperator;
 
@@ -77,6 +76,7 @@ public class AuthAspect {
             }
             //  3.如果校验成功，将用户信息设置到request的attribute里面
             Claims claims = jwtOperator.getClaimsFromToken(token);
+            System.out.println("==========================claims:"+claims);
             request.setAttribute("id", claims.get("id"));
             request.setAttribute("wxNickname", claims.get("wxNickname"));
             request.setAttribute("role", claims.get("role"));

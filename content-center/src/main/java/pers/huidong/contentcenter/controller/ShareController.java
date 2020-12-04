@@ -28,7 +28,7 @@ public class ShareController {
     @GetMapping("/shares/{id}")
     @CheckLogin
     public ShareDTO findById(@PathVariable("id") Integer id) {
-        return shareService.findById(id);
+        return this.shareService.findById(id);
     }
 
     @GetMapping("/q")
@@ -41,6 +41,7 @@ public class ShareController {
         return this.shareService.q(title,pageNo,pageSize);
     }
 
+    @CheckLogin
     @GetMapping("/exchange/{id}")
     public Share exchangeById(@PathVariable Integer id, HttpServletRequest request){
         return this.shareService.exchangeById(id,request);

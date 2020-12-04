@@ -163,8 +163,9 @@ public class ShareServiceImpl implements ShareService {
         }
 
         //2.根据当前登录的用户的id，查询积分是否够
-
+        System.out.println("============integerUserId===="+integerUserId);
         UserDTO userDTO = userCenterFeignClient.findById(integerUserId);
+        System.out.println("================"+price+"================="+userDTO);
         if (price > userDTO.getBonus()) {
             throw new IllegalArgumentException("用户积分不够用！");
         }
