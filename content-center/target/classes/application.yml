@@ -1,0 +1,79 @@
+server:
+  port: 8402
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: huidong
+    password: xhd!0707
+    url: "jdbc:mysql://rm-uf60cb427hat3ys25fo.mysql.rds.aliyuncs.com:3306/content_center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&verifyServerCertificate=false&useSSL=false"
+  application:
+    name: content-center
+  cloud:
+    zipkin:
+      base-url: http://localhost:9411/
+      discovery-client-enabled: false
+    sleuth:
+      sampler:
+        probability: 1.0   #抽样率，默认 0.1
+    nacos:
+      discovery:
+        server-addr: 139.196.196.1:1111
+    sentinel:
+      transport:
+        dashboard: localhost:8088
+        port: 8719   #默认8719端口，假如被占用会自动从8719开始一次扫面，直至找到未被占用的端口
+    stream:
+      rocketmq:
+        binder:
+          name-server: 127.0.0.1:9876
+        bindings:
+          output:
+            producer:
+              transactional: true
+              group: tx-add-bonus-group
+      bindings:
+        output:
+          destination: stream-test-topic
+#user-center:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+#消费者将要去访问的微服务名称（注册成功进nacos的微服务提供者）
+service-url:
+  nacos-user-service: http://user-center
+#激活sentinel对openFeign的支持
+feign:
+  httpclient:
+    enabled: true #让apache httpcilent做请求；而不是默认的urlconnection
+    max-connections: 200 #最大连接数
+    max-connections-per-route: 50 #单个路径的最大连接数
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: full
+        requestInterceptors:
+        - pers.huidong.contentcenter.feignclient.interceptor.TokenRelayRequestInterceptor
+logging:
+  level:
+#    pers.huidong.contentcenter.config.UserCenterFeignConfiguration: debug
+    pers.huidong: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#使用spring-cloud-stream整合rocketmq后不需要这
+#rocketmq:
+#  producer:
+#    group: test-group #小坑：必须指定group
+#  name-server: 127.0.0.1:9876
+
+jwt:
+  secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
+  expire-time-in-second: 1209600  # 有效期，单位秒，默认2周
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
