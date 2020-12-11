@@ -14,9 +14,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserLoginDTO {
     /**
-     * code
+     * 用户名
+     * */
+    private String username;
+    /**
+     * 密码
+     * */
+    private String password;
+    /**
+     * 电话号码
+     * */
+    private String mobile;
+    /**
+     * 短信验证码
      * */
     private String code;
+    /**
+     * 微信code
+     * */
+    private String wxCode;
     /**
      * 头像地址
      * */
@@ -24,5 +40,5 @@ public class UserLoginDTO {
     /**
      * 微信昵称
      * */
-    private String wxNickname;
+    private String nickname;
 }

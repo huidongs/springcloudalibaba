@@ -21,5 +21,5 @@ public class LoginRespDTO {
     /**
      * 用户信息
      * */
-    private UserRespDTO user;
+    private UserRespDTO userInfo;
 }

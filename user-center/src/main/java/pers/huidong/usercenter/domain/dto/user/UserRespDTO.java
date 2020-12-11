@@ -28,5 +28,5 @@ public class UserRespDTO {
     /**
      * 微信昵称
      * */
-    private String wxNickname;
+    private String nickname;
 }

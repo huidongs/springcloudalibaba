@@ -1,12 +1,10 @@
 package pers.huidong.usercenter.domain.entity.user;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -22,16 +20,36 @@ public class User {
     private Integer id;
 
     /**
-     * 微信id，也就是openId
+     * 用户名
      */
-    @Column(name = "wx_id")
-    private String wxId;
+    private String username;
 
     /**
-     * 微信昵称
+     * 密码
      */
-    @Column(name = "wx_nickname")
-    private String wxNickname;
+    private String password;
+
+    /**
+     * open_id
+     */
+    @Column(name = "wx_openid")
+    private String wxOpenid;
+
+    /**
+     * nickname
+     */
+    private String nickname;
+
+    /**
+     * 电话号码
+     */
+    private String mobile;
+
+    /**
+     * 性别
+
+     */
+    private Byte gender;
 
     /**
      * 角色
@@ -45,19 +63,36 @@ public class User {
     private String avatarUrl;
 
     /**
+     * 最后登录时间
+     */
+    @Column(name = "last_login_time")
+    private LocalDateTime lastLoginTime;
+
+    /**
+     * 最后登录ip
+     */
+    @Column(name = "last_login_ip")
+    private String lastLoginIp;
+
+    /**
      * 创建时间
      */
     @Column(name = "create_time")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 积分
      */
     private Integer bonus;
+
+    /**
+     * sessionkey
+     */
+    private String sessionkey;
 }
